@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container menu-board">
+    <h1>{{ room.name }}의 주문 목록</h1>
+    
+    <div class="quick-order-list">
+        <h2>주문 요약</h2>
+        {% for order in orders %}
+        <div class="quick-order-item">
+            <span class="orderer-name">{{ order.orderer_name }}</span>
+            <span class="menu-name">{{ order.menu }}</span>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="detailed-order-list">
+        <h2>상세 주문 내역</h2>
+        {% for order in orders %}
+        <div class="order-card">
+            <h3>{{ order.orderer_name }}의 주문</h3>
+            <p>☕ 메뉴: {{ order.menu }}</p>
+            <p>🌡️ 온도: {{ order.get_temperature_display }}</p>
+            <p>🧊 얼음: {{ order.get_ice_amount_display }}</p>
+            <p>💉 샷 추가: {{ order.extra_shot }}</p>
+            <p><strong>기타 사항:</strong> {{ order.extra_options }}</p>
+        </div>
+        
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

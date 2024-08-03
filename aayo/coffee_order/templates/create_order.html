@@ -1,0 +1,518 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h1>메뉴 선택</h1>
+
+    <div class="room-info">
+        <h2>방 이름: {{ room_name }}</h2>
+        <p>만든 사람: {{ creator_name }}</p>
+    </div>
+    
+    <div class="share-link">
+        <input type="text" id="room-link" value="{{ request.build_absolute_uri }}" readonly>
+        <button class="btn" onclick="copyLink()">링크 복사</button>
+    </div>
+
+    <div class="menu-selection">
+        {% if selected_cafe == 'starbucks' %}
+            <h2>스타벅스 메뉴</h2>
+            <div class="menu-categories">
+                <button class="btn category-btn" onclick="showCategory('new')">NEW</button>
+                <button class="btn category-btn" onclick="showCategory('recommend')">추천</button>
+                <button class="btn category-btn" onclick="showCategory('espresso')">에스프레소</button>
+                <button class="btn category-btn" onclick="showCategory('coldbrew')">콜드 브루</button>
+                <button class="btn category-btn" onclick="showCategory('blonde')">블론드</button>
+                <button class="btn category-btn" onclick="showCategory('decafcoffee')">디카페인 커피</button>
+                <button class="btn category-btn" onclick="showCategory('teavana')">티바나</button>
+                <button class="btn category-btn" onclick="showCategory('fizzio')">피지오</button>
+                <button class="btn category-btn" onclick="showCategory('refreshers')">리프레셔</button>
+                <button class="btn category-btn" onclick="showCategory('frappuccino')">프라푸치노</button>
+                <button class="btn category-btn" onclick="showCategory('blended')">블렌디드</button>
+                <button class="btn category-btn" onclick="showCategory('others')">기타</button>
+                <button class="btn category-btn" onclick="showCategory('trenta')">Trenta</button>
+            </div>
+
+            <div id="new" class="menu-items">
+                <div class="menu-item">
+                    자몽 망고 코코 프라푸치노
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '자몽 망고 코코 프라푸치노')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    헤이즐넛 오트 아이스 쉐이큰 에스프레소
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '헤이즐넛 오트 아이스 쉐이큰 에스프레소')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    스타벅스 유니콘 프라푸치노
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '스타벅스 유니콘 프라푸치노')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    프렌치 바닐라 라떼
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '프렌치 바닐라 라떼')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    제주 팔삭 자몽 허니 블렌디드
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '제주 팔삭 자몽 허니 블렌디드')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    복숭아 티
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '복숭아 티')">Custom</button>
+                </div>
+            </div>
+
+            <div id="recommend" class="menu-items">
+                <div class="menu-item">
+                    카페 아메리카노
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '카페 아메리카노')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    자몽 허니 블랙 티
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '자몽 허니 블랙 티')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    디카페인 카페 아메리카노
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '디카페인 카페 아메리카노')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    프렌치 바닐라 라떼
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '프렌치 바닐라 라떼')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    바닐라 크림 콜드 브루
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '바닐라 크림 콜드 브루')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    카페 라떼
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '카페 라떼')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    제주 팔삭 자몽 허니 블렌디드
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '제주 팔삭 자몽 허니 블렌디드')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    쿨 라임 피지오
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '쿨 라임 피지오')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    콜드 브루
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '콜드 브루')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    복숭아 티
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '복숭아 티')">Custom</button>
+                </div>
+            </div>
+
+            <div id="espresso" class="menu-items">
+                <div class="menu-item">
+                    플랫 화이트
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '플랫 화이트')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    카페 아메리카노
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '카페 아메리카노')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    카페 라떼
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '카페 라떼')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    스타벅스 돌체 라떼
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '스타벅스 돌체 라떼')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    카페 모카
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '카페 모카')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    카푸치노
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '카푸치노')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    카라멜 마키아또
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '카라멜 마키아또')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    화이트 초콜릿 모카
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '화이트 초콜릿 모카')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    커피 스타벅스 더블 샷
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '커피 스타벅스 더블 샷')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    바닐라 스타벅스 더블 샷
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '바닐라 스타벅스 더블 샷')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    헤이즐넛 스타벅스 더블 샷
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '헤이즐넛 스타벅스 더블 샷')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    에스프레소
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '에스프레소')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    에스프레소 마키아또
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '에스프레소 마키아또')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    에스프레소 콘 파나
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '에스프레소 콘 파나')">Custom</button>
+                </div>
+            </div>
+
+            <div id="coldbrew" class="menu-items">
+                <div class="menu-item">
+                    콜드 브루
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '콜드 브루')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    시그니처 더 블랙 콜드 브루
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '시그니처 더 블랙 콜드 브루')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    돌체 콜드 브루
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '돌체 콜드 브루')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    바닐라 크림 콜드 브루
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '바닐라 크림 콜드 브루')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    오트 볼드 브루
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '오트 볼드 브루')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    나이트로 바닐라 크림
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '나이트로 바닐라 크림')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    나이트로 콜드 브루
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '나이트로 콜드 브루')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    흑임자 크림 콜드 브루
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '흑임자 크림 콜드 브루')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    여수 윤슬 헤이즐넛 콜드 브루
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '여수 윤슬 헤이즐넛 콜드 브루')">Custom</button>
+                </div>
+            </div>
+
+            <div id="blonde" class="menu-items">
+                <div class="menu-item">
+                    헤이즐넛 오트 아이스 쉐이큰 에스프레소
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '헤이즐넛 오트 아이스 쉐이큰 에스프레소')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    프렌치 바닐라 라떼
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '프렌치 바닐라 라떼')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    블론드 플랫 화이트
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '블론드 플랫 화이트')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    블론드 카페 아메리카노
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '블론드 카페 아메리카노')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    블론드 카페 라떼
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '블론드 카페 라떼')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    블론드 바닐라 더블 샷 마키아또
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '블론드 바닐라 더블 샷 마키아또')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    블론드 스타벅스 돌체 라떼
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '블론드 스타벅스 돌체 라떼')">Custom</button>
+                </div>
+            </div>
+
+            <div id="blonde" class="menu-items">
+                <div class="menu-item">
+                    디카페인 플랫 화이트
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '디카페인 플랫 화이트')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    디카페인 카페 아메리카노
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '디카페인 카페 아메리카노')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    디카페인 카페 라떼
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '디카페인 카페 라떼')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    디카페인 스타벅스 돌체 라떼
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '디카페인 스타벅스 돌체 라떼')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    디카페인 카라멜 마키아또
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '디카페인 카라멜 마키아또')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    1/2 디카페인 플랫 화이트
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '1/2 디카페인 플랫 화이트')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    1/2 디카페인 스타벅스 돌체 라떼
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '1/2 디카페인 스타벅스 돌체 라떼')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    1/2 디카페인 카라멜 마키아또
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '1/2 디카페인 카라멜 마키아또')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    1/2 디카페인 카페 라떼
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '1/2 디카페인 카페 라떼')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    1/2 디카페인 카페 아메리카노
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '1/2 디카페인 카페 아메리카노')">Custom</button>
+                </div>
+            </div>
+
+            <div id="teavana" class="menu-items">
+                <div class="menu-item">
+                    복숭아 티
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '복숭아 티')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    레몬 캐모마일 블렌드 티
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '레몬 캐모마일 블렌드 티')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    얼 그레이 바닐라 티 라떼
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '얼 그레이 바닐라 티 라떼')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    스타벅스 밀크 티
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '스타벅스 밀크 티')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    스타벅스 클래식 밀크 티 보틀
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '스타벅스 클래식 밀크 티 보틀')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    차이 티 라떼
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '차이 티 라떼')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    제주 말차 라떼
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '제주 말차 라떼')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    유자 민트 티
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '유자 민트 티')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    자몽 허니 블랙 티
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '자몽 허니 블랙 티')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    제주 유기농 녹차로 만든 티
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '제주 유기농 녹차로 만든 티')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    잉글리쉬 브렉퍼스트 티
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '잉글리쉬 브렉퍼스트 티')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    얼 그레이 티
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '얼 그레이 티')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    유스베리 티
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '유스베리 티')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    히비스커스 블렌드 티
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '히비스커스 블렌드 티')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    민트 블렌드 티
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '민트 블렌드 티')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    캐모마일 블렌드 티
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '캐모마일 블렌드 티')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    레드 파워 패션 티
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '레드 파워 패션 티')">Custom</button>
+                </div>
+            </div>
+
+            <div id="fizzio" class="menu-items">
+                <div class="menu-item">
+                    쿨 라임 피지오
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '쿨 라임 피지오')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    블랙 티 레모네이드 피지오
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '블랙 티 레모네이드 피지오')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    패션 탱고 티 레모네이드 피지오
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '패션 탱고 티 레모네이드 피지오')">Custom</button>
+                </div>
+            </div>
+
+            <div id="refreshers" class="menu-items">
+                <div class="menu-item">
+                    딸기 아사이 레모네이드 스타벅스 리프레셔
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '딸기 아사이 레모네이드 스타벅스 리프레셔')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    망고 용과 레모네이드 스타벅스 리프레셔
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '망고 용과 레모네이드 스타벅스 리프레셔')">Custom</button>
+                </div>
+            </div>
+
+            <div id="frappuccino" class="menu-items">
+                <div class="menu-item">
+                    자몽 망고 코코 프라푸치노
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '자몽 망고 코코 프라푸치노')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    스타벅스 유니콘 프라푸치노
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '스타벅스 유니콘 프라푸치노')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    더블 에스프레소 칩 프라푸치노
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '더블 에스프레소 칩 프라푸치노')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    제주 말차 크림 프라푸치노
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '제주 말차 크림 프라푸치노')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    자바 칩 프라푸치노
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '자바 칩 프라푸치노')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    초콜릿 크림 칩 프라푸치노
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '초콜릿 크림 칩 프라푸치노')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    카라멜 프라푸치노
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '카라멜 프라푸치노')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    에스프레소 프라푸치노
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '에스프레소 프라푸치노')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    바닐라 크림 프라푸치노
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '바닐라 크림 프라푸치노')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    제주 까망 크림 프라푸치노
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '제주 까망 크림 프라푸치노')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    제주 쑥떡 크림 프라푸치노
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '제주 쑥떡 크림 프라푸치노')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    화이트 타이거 프라푸치노
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '화이트 타이거 프라푸치노')">Custom</button>
+                </div>
+            </div>
+
+            <div id="blended" class="menu-items">
+                <div class="menu-item">
+                    제주 팔삭 자몽 허니 블렌디드
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '제주 팔삭 자몽 허니 블렌디드')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    딸기 딜라이트 요거트 블렌디드
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '딸기 딜라이트 요거트 블렌디드')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    망고 바나나 블렌디드
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '망고 바나나 블렌디드')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    망고 패션 티 블렌디드
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '망고 패션 티 블렌디드')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    레드 파워 스매시 블렌디드
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '레드 파워 스매시 블렌디드')">Custom</button>
+                </div>
+            </div>
+
+            <div id="others" class="menu-items">
+                <div class="menu-item">
+                    시그니처 초콜릿
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '시그니처 초콜릿')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    스팀 우유
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '스팀 우유')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    우유
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '우유')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    레드 파워 스매셔
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '레드 파워 스매셔')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    스타벅스 슬래머
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '스타벅스 슬래머')">Custom</button>
+                </div>
+            </div>
+
+            <div id="trenta" class="menu-items">
+                <div class="menu-item">
+                    복숭아 아이스 티
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '복숭아 아이스 티')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    콜드 브루
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '콜드 브루')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    아이스 자몽 허니 블랙 티
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '아이스 자몽 허니 블랙 티')">Custom</button>
+                </div>
+                <div class="menu-item">
+                    딸기 아사이 레모네이드 스타벅스 리프레셔
+                    <button class="btn custom-btn" onclick="goToCustom('{{ room.id }}', '딸기 아사이 레모네이드 스타벅스 리프레셔')">Custom</button>
+                </div>
+            </div>
+    
+        {% elif selected_cafe == 'mega' %}
+            <h2>메가커피 메뉴</h2>
+        {% endif %}        
+    </div>
+</div>
+<script>
+    function goToCustom(roomId, menuName) {
+        const url = `/room/${roomId}/?menu=${encodeURIComponent(menuName)}`;
+        window.location.href = url;
+    }
+
+    function copyLink() {
+        const roomLink = document.getElementById('room-link');
+        roomLink.select();
+        document.execCommand('copy');
+        alert('링크가 복사되었습니다.');
+    }
+
+    function showCategory(categoryId) {
+        const categories = document.querySelectorAll('.menu-items');
+        categories.forEach(category => {
+            category.style.display = 'none';
+        });
+        document.getElementById(categoryId).style.display = 'block';
+    }
+</script>
+{% endblock %}

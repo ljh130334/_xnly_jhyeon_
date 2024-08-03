@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <div class="room-info">
+        <h2>{{ room.name }} - {{ room.cafe }}</h2>
+        <p>커스터마이징 중인 메뉴: <strong>{{ menu_name }}</strong></p>
+    </div>
+
+    <form id="order-form" method="POST" action="{% url 'submit_order' room_id=room.id %}">
+        {% csrf_token %}
+        <input type="hidden" name="menu" value="{{ menu_name }}">
+
+        <div class="order-section">
+            <label for="orderer_name">주문하는 사람:</label>
+            <input type="text" id="orderer_name" name="orderer_name" required>
+        </div>
+
+        <div class="order-section">
+            <label>온도:</label>
+            <div class="temperature-buttons">
+                <button type="button" class="temp-btn" data-temp="hot">HOT</button>
+                <button type="button" class="temp-btn" data-temp="ice">ICE</button>
+            </div>
+            <input type="hidden" name="temperature" id="temperature-input">
+        </div>
+
+        <div class="order-section">
+            <label>얼음 양:</label>
+            <div class="ice-buttons">
+                <button type="button" class="ice-btn" data-ice="less">적게</button>
+                <button type="button" class="ice-btn" data-ice="normal">보통</button>
+                <button type="button" class="ice-btn" data-ice="more">많이</button>
+            </div>
+            <input type="hidden" name="ice" id="ice-input">
+        </div>
+
+        <div class="order-section">
+            <label for="extra_shot">샷 추가:</label>
+            <input type="number" id="extra_shot" name="extra_shot" value="0" min="0">
+        </div>
+
+        <div class="order-section">
+            <label for="extra_options">기타 사항:</label>
+            <textarea id="extra_options" name="extra_options"></textarea>
+        </div>
+
+        <div class="button-container">
+            <button type="submit" class="btn pulsating-btn">주문하기</button>
+        </div>
+    </form>
+</div>
+
+<script src="{% static 'js/order.js' %}"></script>
+
+{% endblock %}
